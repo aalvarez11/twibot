@@ -23,6 +23,8 @@ async def on_message(msg):
     # ignore messages from the bot
     if msg.author == bot.user:
         return
+
+    botResponse = f'Your friend {msg.author.display_name} wanted to share this with you!\n'
     
     msgLowered = msg.content.lower()
 
@@ -43,13 +45,13 @@ async def on_message(msg):
                     responseData = vxApiResponse.json()
 
                     if (responseData["hasMedia"] and (responseData["media_extended"][0]["type"] == 'video' or responseData["media_extended"][0]["type"] == 'gif')):
-                        await msg.channel.send('That one\'s supposed to move!\n' + responseData["media_extended"][0]["url"])
+                        await msg.channel.send(botResponse + responseData["media_extended"][0]["url"])
                     else:
                         # replace the url with the cancel url
                         newUrl = msgLine.replace(url, '//xcancel.com')
 
                         # output a message
-                        await msg.channel.send('Fixed it for you!\n' + newUrl)
+                        await msg.channel.send(botResponse + newUrl)
 
                 except requests.exceptions.HTTPError as e:
                     raise SystemExit(e)
