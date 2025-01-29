@@ -23,44 +23,6 @@ async def on_message(msg):
     # ignore messages from the bot
     if msg.author == bot.user:
         return
-
-    # try:
-    #     vxApiResponseImg = requests.get('https://api.vxtwitter.com/twipiebongrip/status/1883670764639174788?t=8G7EkwbsUEapejLU5U24zA&s=19')
-    #     vxApiResponseImg.raise_for_status()
-    #     imgData = vxApiResponseImg.json()
-    #     print(imgData["media_extended"][0]["type"])
-    # except requests.exceptions.HTTPError as e:
-    #     raise SystemExit(e)
-    
-    # print('========================================================')
-    # try:
-    #     vxApiResponseVid = requests.get('https://api.vxtwitter.com/PokemonGems/status/1688174828308590592?t=qvnfMnjMZWK-RQXuxE9t8w&s=19')
-    #     vxApiResponseVid.raise_for_status()
-    #     vidData = vxApiResponseVid.json()
-    #     print(vidData["media_extended"][0]["type"])
-    #     print(vidData["media_extended"][0]["url"])
-    # except requests.exceptions.HTTPError as e:
-    #     raise SystemExit(e)
-
-    # print('========================================================')
-    # try:
-    #     vxApiResponseVid = requests.get('https://api.vxtwitter.com/xsheyou58g/status/1767121503752208670?t=cG6LtKb-3kgMUr44GqZEJQ&s=19')
-    #     vxApiResponseVid.raise_for_status()
-    #     vidData = vxApiResponseVid.json()
-    #     print(vidData["media_extended"][0]["type"])
-    #     print('========================================================')
-    #     print(vidData)
-    # except requests.exceptions.HTTPError as e:
-    #     raise SystemExit(e)
-    
-    # print('========================================================')
-    # try:
-    #     vxApiResponseText = requests.get('https://api.vxtwitter.com/LyonsRoar15/status/1884361255881740687')
-    #     vxApiResponseText.raise_for_status()
-    #     textData = vxApiResponseText.json()
-    #     print(textData)
-    # except requests.exceptions.HTTPError as e:
-    #     raise SystemExit(e)
     
     msgLowered = msg.content.lower()
 
