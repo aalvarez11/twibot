@@ -24,7 +24,7 @@ async def on_message(msg):
     if msg.author == bot.user:
         return
 
-    botResponse = f'Your friend {msg.author.display_name} wanted to share this with you!\n'
+    botResponse = f'Your friend, {msg.author.display_name}, wanted to share this with you!\n'
     
     msgLowered = msg.content.lower()
 
