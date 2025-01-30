@@ -46,6 +46,14 @@ async def on_message(msg):
 
                     if (responseData["hasMedia"] and (responseData["media_extended"][0]["type"] == 'video' or responseData["media_extended"][0]["type"] == 'gif')):
                         await msg.channel.send(botResponse + responseData["media_extended"][0]["url"])
+                        
+                        # check for text in media tweet
+                        if (responseData["text"]):
+                            responseText = responseData["text"]
+                            # remove quote tweet links
+                            if('https://t.co/' in responseText): responseText = responseText.split('https://t.co/')[0]
+                            # do not send empty strings    
+                            if(responseText != ''): await msg.channel.send(f'\n\"' + responseText + f'\"')
                     else:
                         # replace the url with the cancel url
                         newUrl = msgLine.replace(url, '//xcancel.com')
