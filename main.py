@@ -13,11 +13,12 @@ intents = Intents.default()
 intents.message_content = True
 bot = Bot(command_prefix='!', intents=intents)
 
-# Message Functionality
+# Online indicator
 @bot.event
 async def on_ready():
     print(f'logged in as {bot.user.name}')
 
+# Message Functionality
 @bot.event
 async def on_message(msg):
     # ignore messages from the bot
