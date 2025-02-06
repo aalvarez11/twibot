@@ -18,7 +18,6 @@ bot = Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'logged in as {bot.user.name}')
-    await bot.wait_until_ready()
     home_channel = bot.get_channel(CHANNEL_ID)
     await home_channel.send('Good morning everypony!')
 
