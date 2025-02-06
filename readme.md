@@ -18,5 +18,6 @@ The bot detects whenever a user sends a twitter link in the chat and will either
 
 - Add dice rolling using FFG's Fate Dice System
 - Use the future [xcancel API](https://github.com/unixfox/nitter-fork) for video embedding
-- Pray for in-house Discord video embedding
-- separate logic into functions
+- Pray for in-house Discord video embedding (and in discord py)
+- Separate twitter logic into functions
+- Add message deletion for user's own messages via emoji reaction
