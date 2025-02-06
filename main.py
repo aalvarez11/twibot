@@ -1,5 +1,5 @@
 import os 
-from discord.ext.commands import Bot 
+from discord.ext.commands import Bot
 from discord import Intents
 from dotenv import load_dotenv
 import requests
@@ -7,6 +7,7 @@ import requests
 # Load Token from env
 load_dotenv()
 DISCORD_TOKEN = os.getenv("BOT_TOKEN")
+CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 # Bot setup
 intents = Intents.default()
@@ -17,6 +18,9 @@ bot = Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'logged in as {bot.user.name}')
+    await bot.wait_until_ready()
+    home_channel = bot.get_channel(CHANNEL_ID)
+    await home_channel.send('Good morning everypony!')
 
 # Message Functionality
 @bot.event
