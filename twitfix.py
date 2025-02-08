@@ -49,11 +49,11 @@ async def fix_tweets(msg):
         for url in twit_urls:
             if url in line:
                 api_url = line.replace(url, '//api.vxtwitter.com')
-                response_data = fetch_tweet_info(api_url)
+                response_data = await fetch_tweet_info(api_url)
 
                 # extract media if any
-                media_url = check_for_media(response_data)
-                tweet_text = check_for_text(response_data)
+                media_url = await check_for_media(response_data)
+                tweet_text = await check_for_text(response_data)
 
                 # compose output message
                 if media_url: 

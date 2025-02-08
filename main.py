@@ -2,7 +2,6 @@ import os
 from discord.ext.commands import Bot
 from discord import Intents
 from dotenv import load_dotenv
-import requests
 from twitfix import fix_tweets
 
 # Load Token from env
@@ -29,7 +28,7 @@ async def on_message(msg):
     if msg.author == bot.user:
         return
 
-    fix_tweets(msg)
+    await fix_tweets(msg)
 
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
