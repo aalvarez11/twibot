@@ -37,13 +37,12 @@ async def check_for_text(data) -> Optional[str]:
         return None
 
 # Checks messages for twitter urls, 
-# Returns equivalent xcancel url or rips media
-async def fix_url(msg):
+# Responds with equivalent xcancel url or rips media
+async def fix_tweets(msg):
     sender_notice = f'Your friend, {msg.author.display_name}, wanted to share this with you!\n'
 
+    # handle multi-line, multi-link inputs
     msg_lowered = msg.content.lower()
-
-    # handle multiple line inputs
     msg_split = msg_lowered.splitlines()
 
     for line in msg_split:
@@ -56,11 +55,15 @@ async def fix_url(msg):
                 media_url = check_for_media(response_data)
                 tweet_text = check_for_text(response_data)
 
+                # compose output message
                 if media_url: 
                     if tweet_text:
-                        return (sender_notice + tweet_text + media_url)
+                        await msg.channel.send(sender_notice + tweet_text + media_url)
                     else:
-                        return (sender_notice + media_url)
+                        await msg.channel.send(sender_notice + media_url)
                 else:
                     cancel_url = line.replace(url, '//xcancel.com')
-                    return (sender_notice + cancel_url)
+                    await msg.channel.send(sender_notice + cancel_url)
+
+                if(line == msg_split[len(msg_split)-1]):
+                    await msg.delete()
