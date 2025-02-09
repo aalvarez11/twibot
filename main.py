@@ -77,8 +77,8 @@ async def on_message(msg):
 async def on_raw_reaction_add(payload):
     channel = bot.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
-    
-    if(payload.user_id == payload.message_author_id and payload.emoji == "❌"):
+
+    if(payload.user_id == payload.message_author_id and str(payload.emoji) == "\U0000274C"):
         await message.delete()
        
 # Load token on startup
