@@ -72,5 +72,14 @@ async def on_message(msg):
                 if (msgLine == msgContent[len(msgContent)-1]):
                     await msg.delete()
 
+# Reaction Functionality
+@bot.event
+async def on_raw_reaction_add(payload):
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+    
+    if(payload.user_id == payload.message_author_id and payload.emoji == "❌"):
+        await message.delete()
+       
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
