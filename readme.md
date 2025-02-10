@@ -14,6 +14,10 @@ A discord bot that will hopefully evolve and grow, with new features for use in 
 
 The bot detects whenever a user sends a twitter link in the chat and will either replace the message with an xcancel url, or extract any animated media at the source. The bot is also set up to parse batch link posting, though the upper limit has not been tested.
 
+2. Delete User Messages with a Reaction
+
+The bot detects when a user reacts to a message with a designated emoji, in our case ❌ (unicode value: U0000274C), and as long as the reactor is the initial author, the bot shall delete the message. There is potential for moderation in the future, expanding the criteria to a moderator role being able to delete a message.
+
 ## Future Plans
 
 - Add dice rolling using FFG's Fate Dice System
