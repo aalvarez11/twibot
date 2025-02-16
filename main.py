@@ -1,6 +1,6 @@
 import os 
 from discord.ext.commands import Bot
-from discord import Intents
+from discord import Intents, Interaction
 from dotenv import load_dotenv
 import requests
 
@@ -81,5 +81,9 @@ async def on_raw_reaction_add(payload):
     if(payload.user_id == payload.message_author_id and str(payload.emoji) == "\U0000274C"):
         await message.delete()
        
+@bot.tree.command(name='Roll', description='rolls a six-sided die')
+async def roll_dice(interaction: Interaction):
+    await interaction.response.send_message("5")
+
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
