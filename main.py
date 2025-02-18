@@ -81,7 +81,7 @@ async def on_raw_reaction_add(payload):
     if(payload.user_id == payload.message_author_id and str(payload.emoji) == "\U0000274C"):
         await message.delete()
        
-@bot.tree.command(name='Roll', description='rolls a six-sided die')
+@bot.tree.command(name='roll', description='rolls a six-sided die')
 async def roll_dice(interaction: Interaction):
     await interaction.response.send_message("5")
 
