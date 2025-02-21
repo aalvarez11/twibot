@@ -26,4 +26,11 @@ async def test_parsing_roll_with_minus_modifier():
 @pytest.mark.asyncio
 async def test_parsing_roll_with_two_dice_and_modifier():
     test_roll = await parse_roll_input('4d6+2d10-1')
-    assert test_roll == ['-1','4d6']
+    assert test_roll == ['-1','4d6','2d10']
+
+@pytest.mark.asyncio
+async def test_parsing_roll_value_error():
+    with pytest.raises(ValueError) as excinfo:
+        test_roll = await parse_roll_input('4d6*2d10-1')
+        assert test_roll == ['-1','4d6','2d10']
+    assert str(excinfo.value) == 'Illegal character found. Please enter a roll without using *, /, !, @, #, $, %, etc.'
