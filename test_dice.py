@@ -82,22 +82,22 @@ async def test_empty_space_message():
 @pytest.mark.asyncio
 async def test_basic_roll():
     test_outcome = await roll_dice('4d6')
-    assert test_outcome == '4d6'
+    assert test_outcome >= 4 and test_outcome <= 24
 
 @pytest.mark.asyncio
 async def test_basic_roll_with_modifier():
     test_outcome = await roll_dice('4d6+3')
-    assert test_outcome == '+3'
+    assert test_outcome >= 7 and test_outcome <= 27
 
 @pytest.mark.asyncio
 async def test_basic_roll_with_two_dice():
     test_outcome = await roll_dice('4d6+2d10')
-    assert test_outcome == '4d6+2d10'
+    assert test_outcome >= 6 and test_outcome <= 44
 
 @pytest.mark.asyncio
 async def test_basic_roll_with_two_dice_and_modifier():
     test_outcome = await roll_dice('4d6+2d10+5')
-    assert test_outcome == '+5'
+    assert test_outcome >= 11 and test_outcome <= 49
 
 @pytest.mark.asyncio
 async def test_invalid_message_with_symbols():
