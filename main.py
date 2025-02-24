@@ -1,6 +1,6 @@
 import os 
 from discord.ext.commands import Bot
-from discord import Intents, Interaction
+from discord import Intents, Interaction, Object, app_commands
 from dotenv import load_dotenv
 import requests
 from dice import roll_dice
@@ -9,15 +9,18 @@ from dice import roll_dice
 load_dotenv()
 DISCORD_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
+GUILD_ID = int(os.getenv("SERVER_ID"))
 
 # Bot setup
 intents = Intents.default()
 intents.message_content = True
 bot = Bot(command_prefix='!', intents=intents)
+tree = app_commands.CommandTree(bot)
 
 # Online indicator
 @bot.event
 async def on_ready():
+    await tree.sync(guild=Object(id=GUILD_ID))
     print(f'logged in as {bot.user.name}')
     home_channel = bot.get_channel(CHANNEL_ID)
     await home_channel.send('Good morning everypony!')
