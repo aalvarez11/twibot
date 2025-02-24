@@ -24,7 +24,10 @@ async def parse_roll_input(msg: str):
     
 async def roll_die(single_roll: str):
     dice_count = sides = 0
-    result = randint(1, sides) * dice_count
+
+    dice_count, sides = single_roll.split('d')
+
+    result = randint(1, int(sides)) * int(dice_count)
     return result
 
 async def roll_dice(msg: str):
@@ -45,8 +48,4 @@ async def roll_dice(msg: str):
         return msg
     except ValueError as e:
         return f'Sorry! There was something wrong in your message: {e}'
-
-    
-    
-    
-    
+     
