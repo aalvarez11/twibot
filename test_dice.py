@@ -1,7 +1,7 @@
 import pytest
 import asyncio
 import pytest_asyncio
-from dice import parse_roll_input, roll_dice
+from dice import parse_roll_input, roll_die, roll_dice
 
 # =========================================================
 # Testing for parse_roll_input()
@@ -33,13 +33,36 @@ async def test_parsing_roll_with_two_dice_and_modifier():
 
 @pytest.mark.asyncio
 async def test_parsing_roll_value_error():
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(ValueError) as ex_info:
         test_roll = await parse_roll_input('4d6*2d10-1')
         assert test_roll == ['-1','4d6','2d10']
-    assert str(excinfo.value) == ('Illegal character found. '
+    assert str(ex_info.value) == ('Illegal character found. '
                                   'Please enter a roll without '
                                   'using *, /, !, @, #, $, %, etc.')
+# =========================================================
+# Testing for roll_die()
+# =========================================================
+@pytest.mark.asyncio
+async def test_empty_roll():
+    with pytest.raises(ValueError) as ex_info:
+        test_outcome = await roll_die('')
+        assert test_outcome == 0
+    assert str(ex_info.value) == ('Roll string is empty.')
 
+@pytest.mark.asyncio
+async def test_flip_coin():
+    test_outcome = await roll_die('1d2')
+    assert test_outcome >= 1 and test_outcome <= 2
+
+@pytest.mark.asyncio
+async def test_simple_roll():
+    test_outcome = await roll_die('4d6')
+    assert test_outcome >= 4 and test_outcome <= 24
+
+@pytest.mark.asyncio
+async def test_another_simple_roll():
+    test_outcome = await roll_die('3d10')
+    assert test_outcome >= 3 and test_outcome <= 30
 # =========================================================
 # Testing for roll_dice()
 # =========================================================
@@ -83,5 +106,4 @@ async def test_invalid_message_with_symbols():
                             'your message: Illegal character found. '
                             'Please enter a roll without using '
                             '*, /, !, @, #, $, %, etc.')
-    
     
