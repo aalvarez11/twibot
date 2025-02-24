@@ -3,6 +3,7 @@ from discord.ext.commands import Bot
 from discord import Intents, Interaction
 from dotenv import load_dotenv
 import requests
+from dice import roll_dice
 
 # Load Token from env
 load_dotenv()
@@ -80,10 +81,15 @@ async def on_raw_reaction_add(payload):
 
     if(payload.user_id == payload.message_author_id and str(payload.emoji) == "\U0000274C"):
         await message.delete()
-       
-@bot.tree.command(name='roll', description='rolls a six-sided die')
-async def roll_dice(interaction: Interaction):
-    await interaction.response.send_message("5")
+
+# Command Functionality       
+@bot.tree.command(name='roll', description='rolls and sums up dice in the format xdy+z (ex: 3d6+2)')
+async def roll_dice(interaction: Interaction, msg: str):
+    try: 
+        result = await roll_dice(msg)
+        await interaction.response.send_message(f'Here is your result: {result}')
+    except TypeError as e:
+        await interaction.response.send_message(e)
 
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
