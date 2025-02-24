@@ -40,14 +40,16 @@ async def roll_dice(msg: str):
     try:
         parsed_rolls = await parse_roll_input(msg)
 
-        if parsed_rolls is None: raise ValueError('Your message was empty! Try again.')
+        if parsed_rolls is None: raise ValueError('Your rolls came back empty! Try again.')
 
-        for roll in parsed_rolls:
-            if roll == parsed_rolls[0] and re.search(r'^[\+|-]+\d+$', roll):
-                roll_modifier = parsed_rolls[0]
-                return roll_modifier
+        for item in parsed_rolls:
+            if item == parsed_rolls[0] and re.search(r'^[\+|-]+\d+$', item):
+                roll_modifier = int(parsed_rolls[0])
+                roll_result += roll_modifier
+            else: 
+                roll_result += await roll_die(item)
 
-        return msg
+        return roll_result
     except ValueError as e:
         return f'Sorry! There was something wrong in your message: {e}'
      
