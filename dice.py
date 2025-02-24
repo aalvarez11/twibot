@@ -1,9 +1,6 @@
 from random import randint
 import re
 
-async def roll_die(num_of_sides: int):
-    return randint(1, num_of_sides)
-
 async def parse_roll_input(msg: str):
     # only simple rolls allowed
     if re.search(r'[^0-9a-zA-Z\+-]+', msg) is not None: 
@@ -25,15 +22,31 @@ async def parse_roll_input(msg: str):
     else:
         return rolls 
     
+async def roll_die(single_roll: str):
+    dice_count = sides = 0
+    result = randint(1, sides) * dice_count
+    return result
+
 async def roll_dice(msg: str):
+    roll_result = roll_modifier = 0
+    
     if not msg: return 'Hey! You forgot your message! Try again.'
 
     try:
-        parsed_roll = parse_roll_input(msg)
+        parsed_rolls = await parse_roll_input(msg)
+
+        if parsed_rolls is None: raise ValueError('Your message was empty! Try again.')
+
+        for roll in parsed_rolls:
+            if roll == parsed_rolls[0] and re.search(r'^[\+|-]+\d+$', roll):
+                roll_modifier = parsed_rolls[0]
+                return roll_modifier
+
+        return msg
     except ValueError as e:
         return f'Sorry! There was something wrong in your message: {e}'
 
-    dice_count = sides = roll_modifier = 0
     
     
-    return msg
+    
+    
