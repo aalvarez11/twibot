@@ -22,9 +22,13 @@ The bot detects when a user reacts to a message with a designated emoji, in our 
 
 3. Roll Dice
 
+The bot has a slash command for rolling dice. The user inputs a message with the command that contains the amount of dice and what type of dice in the format of xdy. The user may also input multiple dice together and include a modifier value such as +x or -y. All the dice rolls input are summed up together and only modifiers may subtract from the pool.
+Example roll input format: `3d6+4d10-5`
+
 ## Future Plans
 
-- [ ] Add dice rolling for xdy format
+- [x] Add dice rolling for xdy format
+- [ ] Add sign checking for dice
 - [ ] Add dice rolling using FFG's Fate Dice System
 - [ ] Use the future [xcancel API](https://github.com/unixfox/nitter-fork) for video embedding
 - [ ] Pray for in-house Discord video embedding (and in discord py)
