@@ -15,13 +15,17 @@ GUILD_ID = int(os.getenv("SERVER_ID"))
 intents = Intents.default()
 intents.message_content = True
 bot = Bot(command_prefix='!', intents=intents)
-tree = app_commands.CommandTree(bot)
 
 # Online indicator
 @bot.event
 async def on_ready():
-    await tree.sync(guild=Object(id=GUILD_ID))
     print(f'logged in as {bot.user.name}')
+    try:
+        command_count = await bot.tree.sync()
+        print(f'Synced {len(command_count)} command(s)')
+    except Exception as e:
+        print(f'An error with syncing occurred: {e}')
+    
     home_channel = bot.get_channel(CHANNEL_ID)
     await home_channel.send('Good morning everypony!')
 
@@ -85,12 +89,13 @@ async def on_raw_reaction_add(payload):
     if(payload.user_id == payload.message_author_id and str(payload.emoji) == "\U0000274C"):
         await message.delete()
 
-# Command Functionality       
-@bot.tree.command(name='roll', description='rolls and sums up dice in the format xdy+z (ex: 3d6+2)')
-async def roll_dice(interaction: Interaction, msg: str):
+# Command Functionality
+@bot.tree.command(name='roll', description='rolls and sums up dice and a modifier')
+@app_commands.describe(msg="roll format: xdy+...+modifier")
+async def roll(interaction: Interaction, msg: str):
     try: 
         result = await roll_dice(msg)
-        await interaction.response.send_message(f'Here is your result: {result}')
+        await interaction.response.send_message(f'You rolled {msg} and your result is: {result}!')
     except TypeError as e:
         await interaction.response.send_message(e)
 
