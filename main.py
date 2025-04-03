@@ -2,6 +2,7 @@ import os
 from discord.ext.commands import Bot
 from discord import Intents
 from dotenv import load_dotenv
+from datetime import datetime
 import requests
 
 # Load Token from env
@@ -13,13 +14,21 @@ CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 intents = Intents.default()
 intents.message_content = True
 bot = Bot(command_prefix='!', intents=intents)
+curr_time = datetime.now()
 
 # Online indicator
 @bot.event
 async def on_ready():
     print(f'logged in as {bot.user.name}')
     home_channel = bot.get_channel(CHANNEL_ID)
-    await home_channel.send('Good morning everypony!')
+    time_of_day = ''
+    if curr_time.hour >= 17:
+        time_of_day = 'evening'
+    elif curr_time.hour >= 12:
+        time_of_day = 'afternoon'
+    else:
+        time_of_day = 'morning'
+    await home_channel.send(f'Good {time_of_day} everypony!')
 
 # Message Functionality
 @bot.event
