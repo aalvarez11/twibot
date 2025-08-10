@@ -46,6 +46,12 @@ async def on_message(msg):
     if msg.author == bot.user:
         return
 
+    msg_lowered = msg.content.lower()
+
+    if bot.user.mentioned_in(msg): 
+        if 'hi' in msg_lowered or 'hello' in msg_lowered:
+            await msg.channel.send(f'Hello {msg.author.display_name}!')
+
     await fix_tweets(msg)
 
 # Reaction Functionality
