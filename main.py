@@ -74,7 +74,7 @@ async def roll(interaction: Interaction, msg: str):
     except TypeError as e:
         await interaction.response.send_message(e)
 
-@bot.tree.command(name='fun fact', description='provides a fun fact about someone in the server')
+@bot.tree.command(name='fun_fact', description='provides a fun fact about someone in the server')
 async def fun_fact(interaction: Interaction):
     rand_index = randint(0,len(fun_facts)-1)
     await interaction.response.send_message(fun_facts[rand_index])
