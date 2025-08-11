@@ -1,7 +1,6 @@
 import requests
 from typing import Optional
-
-twit_urls = ['//twitter.com','//x.com','//fixupx.com','//fixvx.com','//vxtwitter.com','//fxtwitter.com','//girlcockx.com']
+from twibot_consts import twit_urls
 
 # Makes an API call 
 # Returns the response object, if found

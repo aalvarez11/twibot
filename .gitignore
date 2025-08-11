@@ -1,3 +1,4 @@
 .env
 .vscode
+twibot_consts.py
 __pycache__
