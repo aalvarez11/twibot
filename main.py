@@ -3,9 +3,10 @@ from discord.ext.commands import Bot
 from discord import Intents, Interaction, Object, app_commands
 from dotenv import load_dotenv
 from twitfix import fix_tweets
+from twibot_consts import fun_facts
 from datetime import datetime
-import requests
 from dice import roll_dice
+from random import randint
 
 # Load Token from env
 load_dotenv()
@@ -72,6 +73,11 @@ async def roll(interaction: Interaction, msg: str):
         await interaction.response.send_message(f'You rolled {msg} and your result is: {result}!')
     except TypeError as e:
         await interaction.response.send_message(e)
+
+@bot.tree.command(name='fun fact', description='provides a fun fact about someone in the server')
+async def fun_fact(interaction: Interaction):
+    rand_index = randint(0,len(fun_facts)-1)
+    await interaction.response.send_message(fun_facts[rand_index])
 
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
