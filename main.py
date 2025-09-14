@@ -6,7 +6,8 @@ from twitfix import fix_tweets
 from twibot_consts import fun_facts
 from datetime import datetime
 from dice import roll_dice
-from random import randint
+from random import randint, shuffle
+import math
 
 # Load Token from env
 load_dotenv()
@@ -19,6 +20,8 @@ intents = Intents.default()
 intents.message_content = True
 bot = Bot(command_prefix='!', intents=intents)
 curr_time = datetime.now()
+# Turn me off if needed
+shuffle(fun_facts)
 
 # Online indicator
 @bot.event
@@ -49,7 +52,7 @@ async def on_message(msg):
 
     msg_lowered = msg.content.lower()
 
-    if bot.user.mentioned_in(msg): 
+    if bot.user.mentioned_in(msg) and ('hello' in msg_lowered or 'hi' in msg_lowered or 'morning' in msg_lowered): 
         if 'hi' in msg_lowered or 'hello' in msg_lowered:
             await msg.channel.send(f'Hello {msg.author.display_name}!')
 
@@ -76,8 +79,10 @@ async def roll(interaction: Interaction, msg: str):
 
 @bot.tree.command(name='fun_fact', description='provides a fun fact about someone in the server')
 async def fun_fact(interaction: Interaction):
-    rand_index = randint(0,len(fun_facts)-1)
-    await interaction.response.send_message(fun_facts[rand_index])
+    rand_index = randint(0,math.floor(len(fun_facts)/2))
+    fact_to_share = fun_facts.pop(rand_index)
+    fun_facts.append(fact_to_share)
+    await interaction.response.send_message(fact_to_share)
 
 # Load token on startup
 bot.run(token=DISCORD_TOKEN)
